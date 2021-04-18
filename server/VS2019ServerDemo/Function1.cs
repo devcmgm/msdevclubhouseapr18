@@ -20,14 +20,18 @@ namespace VS2019ServerDemo
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string email = req.Query["email"];
+            string yesno = req.Query["yesno"];
+            string checkbox1 = req.Query["checkbox1"];
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             email = email ?? data?.email;
+            yesno = yesno ?? data?.yesno;
+            checkbox1 = checkbox1 ?? data?.checkbox1;
 
             string responseMessage = string.IsNullOrEmpty(email)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {email}. This HTTP triggered function executed successfully.";
+                : $"Hello, {email} and {yesno} and {checkbox1}. This HTTP triggered function executed successfully.";
 
             return new OkObjectResult(responseMessage);
         }
